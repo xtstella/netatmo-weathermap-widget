@@ -32,3 +32,11 @@ $ npm run dev
 2. Public data is retrieved using the /getpublicdata endpoint  (https://dev.netatmo.com/apidocumentation/weather#getpublicdata)
 
 3. The widget can display the weather information of some of the world's major cites.
+
+## API Doc
+
+Oauth Authentication 
+https://dev.netatmo.com/apidocumentation/oauth
+
+Weather API Documentation
+https://dev.netatmo.com/apidocumentation/weather#documentation
