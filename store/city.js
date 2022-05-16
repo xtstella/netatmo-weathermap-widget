@@ -45,7 +45,12 @@ export const state = () => ({
   ],
   selectableCityList: ['Paris', 'New York', 'Berlin', 'Dublin'],
   selectedCities: [],
-  selectedMeasurType: {},
+  selectedMeasurType: {
+    colorClass: 'bg-amber-500',
+    iconName: 'temperature',
+    title: 'Temperature',
+    value: 'temperature',
+  },
 })
 
 export const getters = {
@@ -89,7 +94,7 @@ export const actions = {
             'false'
           )
           const data = await res.body
-          // Todo: the data returned from the API is quite messy here. For example, when required_type='rain', 
+          // Todo: the data returned from the API is quite messy here. For example, when required_type='rain',
           // there will be temperature, humodity, pressure data too
           // Check if there is a easier way to extract the data needed
           if (state.selectedMeasurType.value === 'temperature') {
