@@ -24,15 +24,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { isEqual } from 'lodash'
 
 export default {
   layout: 'dashboard',
-
   data() {
     return {
       isLoading: false,
-      weatherData: [],
       requiredData: 'temperature',
       ifFilter: 'false',
       headers: [
@@ -73,16 +70,6 @@ export default {
       )
     },
   },
-  watch: {
-    selectedTags(newVal, oldVal) {
-      if (!isEqual(newVal, oldVal)) {
-        this.fetchWeatherData()
-      }
-    },
-  },
-  mounted() {
-    this.fetchWeatherData()
-  },
   methods: {
     async fetchWeatherData() {
       this.isLoading = true
@@ -107,7 +94,7 @@ export default {
         return event.includes(city.city)
       })
       await this.$store.dispatch('city/setSelectedCities', selectedCities)
-      // await this.fetchWeatherData()
+      this.fetchWeatherData()
     },
   },
 }
