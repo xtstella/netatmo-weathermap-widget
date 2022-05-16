@@ -5,6 +5,7 @@
         title="Selected Cities"
         :selectable-tags="selectableTags"
         :selected-tags="selectedTags"
+        :is-loading="isLoading"
         message-no-selected-tags="Please choose at lease one city from the list"
         @updateSelectedTags="updateSelectedTags"
       ></tags-selector>

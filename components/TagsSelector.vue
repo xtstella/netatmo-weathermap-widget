@@ -5,52 +5,57 @@
         {{ title }}
       </h6>
     </div>
-    <transition-group
-      name="tagsGroup"
-      tag="div"
-      class="w-full h-12 bg-white h-max p-2 gap-1 overflow-hidden"
-    >
-      <div
-        v-show="selectedTags.length === 0"
-        key="div-empty-selected-tags"
-        class="text-xs w-max text-gray-400 font-medium py-0.5 h-max gap-1 inline-block m-1"
-      >
-        <h6 class="bg-transparent my-auto">{{ messageNoSelectedTags }}</h6>
-      </div>
-      <div
-        v-for="item in selectedTags"
-        v-show="selectedTags.length !== 0"
-        :key="item"
-        class="text-sm bg-pink-300 w-max font-medium px-3 py-0.5 h-max gap-1 inline-block m-1 rounded-lg"
+    <div v-show="isLoading" class="w-screen">
+      <loading-spinner class="my-10"></loading-spinner>
+    </div>
+    <div v-show="!isLoading">
+      <transition-group
+        name="tagsGroup"
+        tag="div"
+        class="w-full h-12 bg-white h-max p-2 gap-1 overflow-hidden"
       >
         <div
-          class="flex cursor-pointer rounded-lg transition-all"
-          @click.prevent="removeTag(item)"
+          v-show="selectedTags.length === 0"
+          key="div-empty-selected-tags"
+          class="text-xs w-max text-gray-400 font-medium py-0.5 h-max gap-1 inline-block m-1"
         >
-          <h6 class="bg-transparent my-auto">{{ item }}</h6>
-          <button>
-            <svg-icon
-              name="close"
-              class="h-4 w-4 my-auto text-sm text-black -mb-0.5 ml-1"
-            />
-          </button>
+          <h6 class="bg-transparent my-auto">{{ messageNoSelectedTags }}</h6>
         </div>
-      </div>
-    </transition-group>
-    <transition-group
-      name="listGroup"
-      tag="div"
-      class="w-full bg-stone-200 transition-all flex flex-col overflow-hidden"
-    >
-      <button
-        v-for="item in selectableTags"
-        :key="item"
-        class="h-10 hover:bg-pink-200 bg-white active:bg-pink-300 font-medium text-slate-700 transition-all duration-500"
-        @click.prevent="selectTag(item)"
+        <div
+          v-for="item in selectedTags"
+          v-show="selectedTags.length !== 0"
+          :key="item"
+          class="text-sm bg-pink-300 w-max font-medium px-3 py-0.5 h-max gap-1 inline-block m-1 rounded-lg"
+        >
+          <div
+            class="flex cursor-pointer rounded-lg transition-all"
+            @click.prevent="removeTag(item)"
+          >
+            <h6 class="bg-transparent my-auto">{{ item }}</h6>
+            <button>
+              <svg-icon
+                name="close"
+                class="h-4 w-4 my-auto text-sm text-black -mb-0.5 ml-1"
+              />
+            </button>
+          </div>
+        </div>
+      </transition-group>
+      <transition-group
+        name="listGroup"
+        tag="div"
+        class="w-full bg-stone-200 transition-all flex flex-col overflow-hidden"
       >
-        <h6 class="w-full text-left px-3">{{ item }}</h6>
-      </button>
-    </transition-group>
+        <button
+          v-for="item in selectableTags"
+          :key="item"
+          class="h-10 hover:bg-pink-200 bg-white active:bg-pink-300 font-medium text-slate-700 transition-all duration-500"
+          @click.prevent="selectTag(item)"
+        >
+          <h6 class="w-full text-left px-3">{{ item }}</h6>
+        </button>
+      </transition-group>
+    </div>
   </div>
 </template>
 
@@ -72,6 +77,10 @@ export default {
     messageNoSelectedTags: {
       type: String,
       default: '',
+    },
+    isLoading: {
+      type: Boolean,
+      default: false,
     },
   },
   methods: {
