@@ -23,10 +23,12 @@ export default {
   },
   buildModules: [
     '@nuxt/typescript-build',
-    '@nuxtjs/tailwindcss',
     '@nuxtjs/dotenv',
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/svg-sprite',
   ],
   modules: ['@nuxtjs/axios', '@nuxtjs/auth-next'],
   axios: {},
   auth: {},
+  svgSprite: {}
 }
