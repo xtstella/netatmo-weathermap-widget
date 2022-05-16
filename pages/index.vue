@@ -6,7 +6,6 @@
         :selectable-tags="selectableTags"
         :selected-tags="selectedTags"
         message-no-selected-tags="Please choose at lease one city from the list"
-        @updateSelectableTags="updateSelectableTags"
         @updateSelectedTags="updateSelectedTags"
       ></tags-selector>
     </div>
@@ -31,8 +30,6 @@ export default {
   data() {
     return {
       isLoading: false,
-      selectableTags: ['Paris', 'New York', 'Berlin', 'Bogota'],
-      selectedTags: [],
       weatherData: [],
       requiredData: 'temperature',
       ifFilter: 'false',
@@ -59,10 +56,19 @@ export default {
   computed: {
     ...mapGetters({
       defaultCities: 'city/getDefaultCities',
+      selectableCityList: 'city/getSelectableCityList',
       selectedCities: 'city/getSelectedCities',
     }),
     tableRows() {
       return this.selectedCities
+    },
+    selectedTags() {
+      return this.selectedCities.map((city) => city.city)
+    },
+    selectableTags() {
+      return this.selectableCityList.filter(
+        (tag) => !this.selectedTags.includes(tag)
+      )
     },
   },
   async mounted() {
@@ -91,8 +97,12 @@ export default {
     this.isLoading = false
   },
   methods: {
-    updateSelectableTags() {},
-    updateSelectedTags() {},
+    updateSelectedTags(event) {
+      const selectedCities = this.defaultCities.filter(city => {
+        return event.includes(city.city)
+      })
+      this.$store.dispatch('city/setSelectedCities', selectedCities)
+    },
   },
 }
 </script>

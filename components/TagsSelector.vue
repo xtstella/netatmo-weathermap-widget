@@ -20,10 +20,10 @@
       <div
         v-for="(item, index) in selectedTags"
         v-show="selectedTags.length !== 0"
-        :key="item"
+        :key="index"
         class="text-xs bg-pink-300 w-max text-slate-900 font-medium px-1 py-0.5 h-max gap-1 inline-block m-1"
       >
-        <div class="flex cursor-pointer" @click="removeTag(item, index)">
+        <div class="flex cursor-pointer" @click.prevent="removeTag(item)">
           <h6 class="bg-transparent my-auto">{{ item }}</h6>
           <button>
             <svg-icon
@@ -41,9 +41,9 @@
     >
       <button
         v-for="(item, index) in selectableTags"
-        :key="item"
+        :key="index"
         class="h-10 hover:bg-pink-200 bg-white active:bg-pink-300 font-medium text-slate-700 transition-all duration-500"
-        @click="selectTag(item, index)"
+        @click.prevent="selectTag(item)"
       >
         <h6 class="w-full text-left px-3">{{ item }}</h6>
       </button>
@@ -72,13 +72,11 @@ export default {
     },
   },
   methods: {
-    selectTag(item, index) {
-      this.$emit('updateSelectableTags', this.selectableTags.slice(index, 1))
-      this.$emit('updateSelectableTags', this.selectedTags.concat(item))
+    selectTag(item) {
+      this.$emit('updateSelectedTags', this.selectedTags.concat(item))
     },
-    removeTag(item, index) {
-      this.$emit('updateSelectableTags', this.selectedTags.concat(item))
-      this.$emit('updateSelectableTags', this.selectableTags.slice(index, 1))
+    removeTag(item) {
+      this.$emit('updateSelectedTags', this.selectedTags.filter(taf => taf !== item))
     },
   },
 }
