@@ -8,11 +8,11 @@ class AuthService implements AuthServiceInterface {
     this.$axios = $axios
   }
 
-  async getAcessToken(username: string, password: string): Promise<string> {
+  async getAcessToken(clientId: string, clientSecret: string, username: string, password: string): Promise<string> {
     const body = qs.stringify({
       grant_type: 'password',
-      client_id: process.env.DEV_NETATMO_CLIENT_ID,
-      client_secret: process.env.DEV_NETATMO_CLIENT_SECRET,
+      client_id: clientId,
+      client_secret: clientSecret,
       username,
       password,
       scope: 'read_station',

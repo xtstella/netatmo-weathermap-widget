@@ -157,8 +157,10 @@ export default {
         await this.$store.dispatch('city/fetchCityWeather', params)
       } else {
         const token = await this.$authService().getAcessToken(
-          process.env.DEV_NETATMO_USER_NAME,
-          process.env.DEV_NETATMO_PASSWORD
+          this.$config.DEV_NETATMO_CLIENT_ID,
+          this.$config.DEV_NETATMO_CLIENT_SECRET,
+          this.$config.DEV_NETATMO_USER_NAME,
+          this.$config.DEV_NETATMO_PASSWORD
         )
         this.$auth.strategy.token.set(token)
       }

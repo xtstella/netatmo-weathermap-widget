@@ -1,3 +1,3 @@
 export default interface AuthServiceInterface {
-  getAcessToken(username: string, password: string): Promise<string>
+  getAcessToken(clientId: string, clientSecret: string, username: string, password: string): Promise<string>
 }

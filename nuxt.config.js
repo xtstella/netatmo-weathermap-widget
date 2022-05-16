@@ -32,5 +32,12 @@ export default {
   modules: ['@nuxtjs/axios', '@nuxtjs/auth-next'],
   axios: {},
   auth,
-  svgSprite: {}
+  svgSprite: {},
+  // for the deployment, in order to use Config Vars in heroku
+  publicRuntimeConfig: {
+    DEV_NETATMO_CLIENT_ID: process.env.DEV_NETATMO_CLIENT_ID,
+    DEV_NETATMO_CLIENT_SECRET: process.env.DEV_NETATMO_CLIENT_SECRET,
+    DEV_NETATMO_USER_NAME: process.env.DEV_NETATMO_CLIENT_SECRET,
+    DEV_NETATMO_PASSWORD: process.env.DEV_NETATMO_CLIENT_SECRET,
+  },
 }
