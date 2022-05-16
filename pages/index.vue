@@ -28,7 +28,7 @@ export default {
         requiredData,
         ifFilter
       )
-      console.log(result)
+      console.log(result.body)
     },
   },
 }

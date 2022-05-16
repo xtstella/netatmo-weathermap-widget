@@ -1,6 +1,6 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import WeatherServiceInterface from './weatherService.interface'
-import { Location } from "~/types/location";
+import { Location } from '~/types/location'
 
 class WeatherService implements WeatherServiceInterface {
   private $axios: NuxtAxiosInstance
@@ -21,13 +21,14 @@ class WeatherService implements WeatherServiceInterface {
       lon_ne: locationParams.lon_ne,
       lon_sw: locationParams.lon_sw,
       required_data: requiredData,
-      filter: ifFilter
+      filter: ifFilter,
     }
-    const res = await this.$axios.get(
+    const { data } = await this.$axios.get(
       'https://api.netatmo.com/api/getpublicdata',
       { headers, params }
     )
-    return res
+
+    return data
   }
 }
 

@@ -15,9 +15,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        sky: colors.sky,
-        amber: colors.amber,
-        slate: colors.slate,
+        amber: colors.amber
       },
       fontSize: {
         'title-large': [
