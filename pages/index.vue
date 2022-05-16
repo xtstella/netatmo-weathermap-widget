@@ -10,14 +10,21 @@
         @updateSelectedTags="updateSelectedTags"
       ></tags-selector>
     </div>
-    <div class="w-screen mt-10 bg-white h-[35vh] overflow-y-scroll">
-      <base-table
-        :headers="headers"
-        :rows="tableRows"
-        :is-loading="isLoading"
-        message-no-rows="No City Selected"
-      >
-      </base-table>
+    <div class="w-screen mt-10 bg-white h-[35vh] flex flex-row">
+      <div class="w-4/5 overflow-y-scroll">
+        <base-table
+          :headers="tableHeaders"
+          :rows="tableRows"
+          :is-loading="isLoading"
+          message-no-rows="No City Selected"
+        >
+        </base-table>
+      </div>
+      <div class="w-1/5 h-full">
+        <vertical-tab-selector
+          :options="measurementOptions"
+        ></vertical-tab-selector>
+      </div>
     </div>
   </div>
 </template>
@@ -32,7 +39,7 @@ export default {
       isLoading: false,
       requiredData: 'temperature',
       ifFilter: 'false',
-      headers: [
+      tableHeaders: [
         {
           text: 'City',
           value: 'city',
@@ -48,6 +55,23 @@ export default {
         {
           text: 'Pressure',
           value: 'pressure',
+        },
+      ],
+      measurementOptions: [
+        {
+          colorClass: 'bg-amber-500',
+          iconName: 'temperature',
+          title: 'Temperature',
+        },
+        {
+          colorClass: 'bg-blue-500',
+          iconName: 'rain',
+          title: 'Rain',
+        },
+        {
+          colorClass: 'bg-green-500',
+          iconName: 'wind',
+          title: 'Wind',
         },
       ],
     }
