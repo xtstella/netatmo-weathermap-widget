@@ -44,18 +44,7 @@ export const state = () => ({
     },
   ],
   selectableCityList: ['Paris', 'New York', 'Berlin', 'Dublin'],
-  selectedCities: [
-    {
-      city: 'Paris',
-      lat_ne: 48.86471476180278,
-      lat_sw: 48.83579746243092,
-      lon_ne: 2.373046875,
-      lon_sw: 2.3291015625,
-      temperature: '',
-      humidity: '',
-      pressure: '',
-    },
-  ],
+  selectedCities: [],
 })
 
 export const getters = {
