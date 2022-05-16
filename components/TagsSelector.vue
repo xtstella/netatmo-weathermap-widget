@@ -1,14 +1,14 @@
 <template>
-  <div class="bg-gradient-to-br w-full">
+  <div class="w-full">
     <div class="w-full h-10 font-bold">
       <h6 class="py-2 bg-gray-100 font-bold my-auto px-3">
         {{ title }}
       </h6>
     </div>
     <transition-group
-      name="TagList"
+      name="tagsGroup"
       tag="div"
-      class="w-full h-10 bg-white h-max p-2 gap-1 overflow-hidden"
+      class="w-full h-12 bg-white h-max p-2 gap-1 overflow-hidden"
     >
       <div
         v-show="selectedTags.length === 0"
@@ -21,21 +21,24 @@
         v-for="item in selectedTags"
         v-show="selectedTags.length !== 0"
         :key="item"
-        class="text-xs bg-pink-300 w-max text-slate-900 font-medium px-1 py-0.5 h-max gap-1 inline-block m-1"
+        class="text-sm bg-pink-300 w-max font-medium px-3 py-0.5 h-max gap-1 inline-block m-1 rounded-lg"
       >
-        <div class="flex cursor-pointer" @click.prevent="removeTag(item)">
+        <div
+          class="flex cursor-pointer rounded-lg transition-all"
+          @click.prevent="removeTag(item)"
+        >
           <h6 class="bg-transparent my-auto">{{ item }}</h6>
           <button>
             <svg-icon
               name="close"
-              class="h-4 w-4 my-auto text-sm text-black -mb-1 transition-all"
+              class="h-4 w-4 my-auto text-sm text-black -mb-0.5 ml-1"
             />
           </button>
         </div>
       </div>
     </transition-group>
     <transition-group
-      name="list"
+      name="listGroup"
       tag="div"
       class="w-full bg-stone-200 transition-all flex flex-col shadow-xl overflow-hidden"
     >
@@ -76,10 +79,36 @@ export default {
       this.$emit('updateSelectedTags', this.selectedTags.concat(item))
     },
     removeTag(item) {
-      this.$emit('updateSelectedTags', this.selectedTags.filter(taf => taf !== item))
+      this.$emit(
+        'updateSelectedTags',
+        this.selectedTags.filter((taf) => taf !== item)
+      )
     },
   },
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+
+.tagsGroup-enter-active,
+.tagsGroup-leave-active {
+  transition: all 1s ease;
+}
+.tagsGroup-enter-from,
+.tagsGroup-leave-to {
+  opacity: 0;
+  transform: scaleX(0%);
+  margin-left: -30px;
+}
+
+
+.listGroup-enter-active,
+.listGroup-leave-active {
+  transition: all 1s ease;
+}
+.listGroup-enter-from,
+.listGroup-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+</style>
