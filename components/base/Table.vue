@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-if="rows.length === 0" :key="i">
+        <tr v-if="rows.length === 0" key="div-empty-rows">
           <td class="px-5 py-5 font-light text-bluescale-200 text-body-median">
             No City Selected
           </td>

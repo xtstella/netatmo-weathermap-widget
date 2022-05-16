@@ -18,9 +18,9 @@
         <h6 class="bg-transparent my-auto">{{ messageNoSelectedTags }}</h6>
       </div>
       <div
-        v-for="(item, index) in selectedTags"
+        v-for="item in selectedTags"
         v-show="selectedTags.length !== 0"
-        :key="index"
+        :key="item"
         class="text-xs bg-pink-300 w-max text-slate-900 font-medium px-1 py-0.5 h-max gap-1 inline-block m-1"
       >
         <div class="flex cursor-pointer" @click.prevent="removeTag(item)">
@@ -40,8 +40,8 @@
       class="w-full bg-stone-200 transition-all flex flex-col shadow-xl overflow-hidden"
     >
       <button
-        v-for="(item, index) in selectableTags"
-        :key="index"
+        v-for="item in selectableTags"
+        :key="item"
         class="h-10 hover:bg-pink-200 bg-white active:bg-pink-300 font-medium text-slate-700 transition-all duration-500"
         @click.prevent="selectTag(item)"
       >
