@@ -1,15 +1,25 @@
 <template>
-  <div class="bg-gradient-to-br">
-    <h6 class="w-72 h-10 bg-gray-100 text-left font-medium px-3 my-auto">
-      {{ title }}
-    </h6>
+  <div class="bg-gradient-to-br w-full">
+    <div class="w-full h-10 font-bold">
+      <h6 class="py-2 bg-gray-100 font-bold my-auto px-3">
+        {{ title }}
+      </h6>
+    </div>
     <transition-group
       name="TagList"
       tag="div"
-      class="w-72 h-10 bg-white rounded-md h-max p-2 gap-1 overflow-hidden"
+      class="w-full h-10 bg-white h-max p-2 gap-1 overflow-hidden"
     >
       <div
+        v-show="selectedTags.length === 0"
+        key="div-empty-selected-tags"
+        class="text-xs w-max text-gray-400 font-medium py-0.5 h-max gap-1 inline-block m-1"
+      >
+        <h6 class="bg-transparent my-auto">{{ messageNoSelectedTags }}</h6>
+      </div>
+      <div
         v-for="(item, index) in selectedTags"
+        v-show="selectedTags.length !== 0"
         :key="item"
         class="text-xs bg-pink-300 w-max text-slate-900 font-medium px-1 py-0.5 h-max gap-1 inline-block m-1"
       >
@@ -27,7 +37,7 @@
     <transition-group
       name="list"
       tag="div"
-      class="w-72 bg-stone-200 transition-all rounded-md flex flex-col shadow-xl overflow-hidden"
+      class="w-full bg-stone-200 transition-all flex flex-col shadow-xl overflow-hidden"
     >
       <button
         v-for="(item, index) in selectableTags"
@@ -55,6 +65,10 @@ export default {
     selectedTags: {
       type: Array,
       default: () => [],
+    },
+    messageNoSelectedTags: {
+      type: String,
+      default: '',
     },
   },
   methods: {
