@@ -2,6 +2,13 @@
   <div>
     <base-table :headers="headers" :rows="tableRows"> </base-table>
     <div class="relative px-12 pt-20">
+      <tags-selector
+        title="Cities"
+        :selectable-tags="selectableTags"
+        :selected-tags="selectedTags"
+        @updateSelectableTags="updateSelectableTags"
+        @updateSelectedTags="updateSelectedTags"
+      ></tags-selector>
       <template v-if="isLoading">
         <loading-spinner></loading-spinner>
       </template>
@@ -94,6 +101,10 @@ export default {
       this.$auth.strategy.token.set(token)
     }
     this.isLoading = false
+  },
+  methods: {
+    updateSelectableTags() {},
+    updateSelectedTags() {},
   },
 }
 </script>
