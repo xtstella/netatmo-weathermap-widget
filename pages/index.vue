@@ -27,39 +27,6 @@ import { mapGetters } from 'vuex'
 
 export default {
   layout: 'dashboard',
-  // async asyncData({
-  //   $weatherService,
-  //   $authService,
-  //   $auth,
-  //   requiredData,
-  //   ifFilter,
-  //   selectedCities,
-  // }) {
-  //   if ($auth.strategy.token.status().valid()) {
-  //     const location = {
-  //       lat_ne: selectedCities[0].lat_ne,
-  //       lat_sw: selectedCities[0].lat_sw,
-  //       lon_ne: selectedCities[0].lon_ne,
-  //       lon_sw: selectedCities[0].lon_sw,
-  //     }
-  //     const res = await $weatherService().getPublicData(
-  //       $auth.strategy.token.get(),
-  //       location,
-  //       requiredData,
-  //       ifFilter
-  //     )
-  //     return {
-  //       weatherData: res,
-  //     }
-  //   } else {
-  //     const token = await $authService().getAcessToken(
-  //       process.env.DEV_NETATMO_USER_NAME,
-  //       process.env.DEV_NETATMO_PASSWORD
-  //     )
-  //     $auth.strategy.token.set(token)
-  //   }
-  //   return []
-  // },
 
   data() {
     return {
