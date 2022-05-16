@@ -7,13 +7,13 @@
         :selected-tags="selectedTags"
         :is-loading="isLoading"
         message-no-selected-tags="Please choose at lease one city from the list"
-        @updateSelectedTags="updateSelectedTags"
+        @updateSelectedTags="updateSelectedCities"
       ></tags-selector>
     </div>
     <div class="w-screen mt-10 bg-white h-[35vh] flex flex-row">
       <div class="w-4/5 overflow-y-scroll">
         <base-table
-          :headers="tableHeaders"
+          :headers="tableHeaders[selectedMeasureType.value]"
           :rows="tableRows"
           :is-loading="isLoading"
           message-no-rows="No City Selected"
@@ -23,6 +23,7 @@
       <div class="w-1/5 h-full">
         <vertical-tab-selector
           :options="measurementOptions"
+          @updateSelectedTab="updateSelectedMeasureType"
         ></vertical-tab-selector>
       </div>
     </div>
@@ -37,41 +38,92 @@ export default {
   data() {
     return {
       isLoading: false,
-      requiredData: 'temperature',
-      ifFilter: 'false',
-      tableHeaders: [
-        {
-          text: 'City',
-          value: 'city',
-        },
-        {
-          text: 'Temperature',
-          value: 'temperature',
-        },
-        {
-          text: 'Humidity',
-          value: 'humidity',
-        },
-        {
-          text: 'Pressure',
-          value: 'pressure',
-        },
-      ],
+      tableHeaders: {
+        temperature: [
+          {
+            text: 'City',
+            value: 'city',
+          },
+          {
+            text: 'Temperature',
+            value: 'temperature',
+          },
+          {
+            text: 'Humidity',
+            value: 'humidity',
+          },
+          {
+            text: 'Pressure',
+            value: 'pressure',
+          },
+        ],
+        rain: [
+          {
+            text: 'City',
+            value: 'city',
+          },
+          {
+            text: 'Rain 24h',
+            value: 'rain_24h',
+          },
+          {
+            text: 'Rain 60min',
+            value: 'rain_60min',
+          },
+          {
+            text: 'Rain Live',
+            value: 'rain_live',
+          },
+          {
+            text: 'Rain Timeutc',
+            value: 'rain_timeutc',
+          },
+        ],
+         wind: [
+          {
+            text: 'City',
+            value: 'city',
+          },
+          {
+            text: 'Gust Angle',
+            value: 'gust_angle',
+          },
+          {
+            text: 'Gust Strength',
+            value: 'gust_strength',
+          },
+          {
+            text: 'Wind Angle',
+            value: 'wind_angle',
+          },
+          {
+            text: 'Wind Strength',
+            value: 'wind_strength',
+          },
+          {
+            text: 'Wind Timeutc',
+            value: 'wind_timeutc',
+          },
+        ],
+      },
       measurementOptions: [
         {
           colorClass: 'bg-amber-500',
           iconName: 'temperature',
           title: 'Temperature',
+          value: 'temperature',
         },
         {
           colorClass: 'bg-blue-500',
           iconName: 'rain',
           title: 'Rain',
+          value: 'rain',
         },
         {
           colorClass: 'bg-green-500',
           iconName: 'wind',
           title: 'Wind',
+          value: 'wind',
         },
       ],
     }
@@ -81,6 +133,7 @@ export default {
       defaultCities: 'city/getDefaultCities',
       selectableCityList: 'city/getSelectableCityList',
       selectedCities: 'city/getSelectedCities',
+      selectedMeasureType: 'city/getSelectedMeasureType',
     }),
     tableRows() {
       return this.selectedCities
@@ -100,8 +153,6 @@ export default {
       if (this.$auth.strategy.token.status().valid()) {
         const params = {
           token: this.$auth.strategy.token.get(),
-          requiredData: this.requiredData,
-          ifFilter: this.ifFilter,
         }
         await this.$store.dispatch('city/fetchCityWeather', params)
       } else {
@@ -113,11 +164,15 @@ export default {
       }
       this.isLoading = false
     },
-    async updateSelectedTags(event) {
+    async updateSelectedCities(event) {
       const selectedCities = await this.defaultCities.filter((city) => {
         return event.includes(city.city)
       })
       await this.$store.dispatch('city/setSelectedCities', selectedCities)
+      this.fetchWeatherData()
+    },
+    async updateSelectedMeasureType(event) {
+      await this.$store.dispatch('city/setSelectedMeasureType', event)
       this.fetchWeatherData()
     },
   },

@@ -5,7 +5,7 @@
       :key="index"
       class="flex flex-col justify-center w-full text-white hover:bg-opacity-70 active:bg-opacity-40"
       :class="[option.colorClass]"
-      @click="selectTab(index)"
+      @click.prevent="selectTab(option)"
     >
       <h6 class="mx-auto text-lg font-bold tracking-wider uppercase">
         {{ option.title }}
@@ -24,7 +24,9 @@ export default {
     },
   },
   methods: {
-    selectTab() {},
+    selectTab(option) {
+      this.$emit('updateSelectedTab', option)
+    },
   },
 }
 </script>
