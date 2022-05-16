@@ -40,3 +40,8 @@ https://dev.netatmo.com/apidocumentation/oauth
 
 Weather API Documentation
 https://dev.netatmo.com/apidocumentation/weather#documentation
+
+
+## ToDo
+
+1. For now only the API calling service script is with typescript, need to change the component js and the store to ts if there is time (need some extra configs).
