@@ -1,3 +1,5 @@
+import auth from './config/auth'
+
 export default {
   ssr: false,
   head: {
@@ -29,6 +31,6 @@ export default {
   ],
   modules: ['@nuxtjs/axios', '@nuxtjs/auth-next'],
   axios: {},
-  auth: {},
+  auth,
   svgSprite: {}
 }
