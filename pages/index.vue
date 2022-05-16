@@ -1,12 +1,13 @@
 <template>
   <div>
-    <button class="flex items-center text-sm" @click="login">Login</button>
+  
+    
   </div>
 </template>
 
 <script>
 export default {
-  layout: 'default',
+  layout: 'dashboard',
   methods: {
     async login() {
       const token = await this.$authService().getAcessToken(
