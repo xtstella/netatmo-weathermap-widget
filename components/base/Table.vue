@@ -14,6 +14,11 @@
         </tr>
       </thead>
       <tbody>
+        <tr v-if="rows.length === 0" :key="i">
+          <td class="px-5 py-5 font-light text-bluescale-200 text-body-median">
+            No City Selected
+          </td>
+        </tr>
         <tr v-for="(row, i) in rows" :key="i">
           <td
             v-for="header in headers"
@@ -39,6 +44,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    messageNoRows: {
+      type: String,
+      default: '/',
+    }
   },
 }
 </script>

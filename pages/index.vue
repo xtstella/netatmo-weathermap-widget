@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-table :headers="headers" :rows="tableRows"> </base-table>
+    <base-table :headers="headers" :rows="tableRows" message-no-rows="No City Selected"> </base-table>
     <div class="relative px-12 pt-20">
       <tags-selector
         title="Cities"
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   layout: 'dashboard',
   async asyncData({
@@ -52,10 +54,10 @@ export default {
     }
     return []
   },
+
   data() {
     return {
       isLoading: false,
-      token: '',
       selectableTags: ['Paris', 'New York', 'Berlin', 'Bogota'],
       selectedTags: [],
       weatherData: [],
@@ -64,32 +66,30 @@ export default {
       headers: [
         {
           text: 'City',
-          value: 'city'
+          value: 'city',
         },
         {
           text: 'Temperature',
-          value: 'temperature'
+          value: 'temperature',
         },
         {
           text: 'Humidity',
-          value: 'humidity'
+          value: 'humidity',
         },
         {
           text: 'Pressure',
-          value: 'pressure'
-        },
-      ],
-      tableRows: [
-        {
-          city: 'Paris',
-          temperature: '1',
-        },
-        {
-          city: 'New York',
-          temperature: '2',
+          value: 'pressure',
         },
       ],
     }
+  },
+  computed: {
+    ...mapGetters({
+      defaultCities: 'city/getDefaultCities',
+    }),
+    tableRows() {
+      return this.defaultCities
+    },
   },
   async created() {
     this.isLoading = true
