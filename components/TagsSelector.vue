@@ -40,7 +40,7 @@
     <transition-group
       name="listGroup"
       tag="div"
-      class="w-full bg-stone-200 transition-all flex flex-col shadow-xl overflow-hidden"
+      class="w-full bg-stone-200 transition-all flex flex-col overflow-hidden"
     >
       <button
         v-for="item in selectableTags"
@@ -89,7 +89,6 @@ export default {
 </script>
 
 <style scoped>
-
 .tagsGroup-enter-active,
 .tagsGroup-leave-active {
   transition: all 1s ease;
@@ -100,7 +99,6 @@ export default {
   transform: scaleX(0%);
   margin-left: -30px;
 }
-
 
 .listGroup-enter-active,
 .listGroup-leave-active {

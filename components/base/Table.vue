@@ -1,6 +1,6 @@
 <template>
-  <div v-if="rows" class="w-full">
-    <table class="w-full bg-white">
+  <div v-if="rows" class="w-full bg-white">
+    <table class="w-full">
       <thead>
         <tr>
           <th
@@ -16,18 +16,23 @@
       <tbody>
         <tr v-if="rows.length === 0" key="div-empty-rows">
           <td class="px-5 py-5 font-light text-bluescale-200 text-body-median">
-            No City Selected
+            {{ messageNoRows }}
           </td>
         </tr>
-        <tr v-for="(row, i) in rows" :key="i">
-          <td
-            v-for="header in headers"
-            :key="header.value"
-            class="px-5 py-5 font-light text-bluescale-200 text-body-median"
-          >
-            <span class="whitespace-nowrap">{{ row[header.value] }}</span>
-          </td>
-        </tr>
+        <template v-if="isLoading" class="px-auto mx-auto">
+          <loading-spinner v-show="isLoading"></loading-spinner>
+        </template>
+        <template v-else>
+          <tr v-for="(row, i) in rows" :key="i">
+            <td
+              v-for="header in headers"
+              :key="header.value"
+              class="px-5 py-5 font-light text-bluescale-200 text-body-median"
+            >
+              <span class="whitespace-nowrap">{{ row[header.value] }}</span>
+            </td>
+          </tr>
+        </template>
       </tbody>
     </table>
   </div>
@@ -47,7 +52,11 @@ export default {
     messageNoRows: {
       type: String,
       default: '/',
-    }
+    },
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
   },
 }
 </script>

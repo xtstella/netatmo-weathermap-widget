@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="relative pt-20 w-screen">
+  <div class="h-[90vh]">
+    <div class="w-screen mt-10 bg-white h-[35vh] overflow-y-scroll">
       <tags-selector
         title="Selected Cities"
         :selectable-tags="selectableTags"
@@ -9,20 +9,21 @@
         @updateSelectedTags="updateSelectedTags"
       ></tags-selector>
     </div>
-    <loading-spinner v-show="isLoading" class="pt-12"></loading-spinner>
-    <base-table
-      v-show="!isLoading"
-      :headers="headers"
-      :rows="tableRows"
-      message-no-rows="No City Selected"
-      class="pt-12"
-    >
-    </base-table>
+    <div class="w-screen mt-10 bg-white h-[35vh] overflow-y-scroll">
+      <base-table
+        :headers="headers"
+        :rows="tableRows"
+        :is-loading="isLoading"
+        message-no-rows="No City Selected"
+      >
+      </base-table>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { isEqual } from 'lodash'
 
 export default {
   layout: 'dashboard',
@@ -71,6 +72,13 @@ export default {
       )
     },
   },
+  watch: {
+    selectedTags(newVal, oldVal) {
+      if (!isEqual(newVal, oldVal)) {
+        this.fetchWeatherData()
+      }
+    },
+  },
   mounted() {
     this.fetchWeatherData()
   },
@@ -98,7 +106,7 @@ export default {
         return event.includes(city.city)
       })
       await this.$store.dispatch('city/setSelectedCities', selectedCities)
-      await this.fetchWeatherData()
+      // await this.fetchWeatherData()
     },
   },
 }
