@@ -1,21 +1,19 @@
-# netatmo-weathermap-widget
+# Netatmo Weathermap Widget
 A widget that can get weather data of the world's major cities from Netatmo Weather Stations and display the temperature, humidity, pressure information in an interactive interface.
 
-## Tech Stack
-Project is created with:
 
-NPM Version: 8.1.0
+## Demo
+Try out a <a href="https://netatmo-weathermap-widget.herokuapp.com/">Live Demo</a>
 
-NodeJS version: 17.0.0
 
-NuxtJS version: 2.15.7
-
-TailwindCSS
-
-Typescript
+## Technologies
+* NuxtJS V2.15.7
+* Tailwind CSS
+* Typescript
 
 
 ## Development Env Setup
+First create your .env file. (You can either create a netatmo account and a app to get the credentials or contact the author for more info.)
 
 ```bash
 # install dependencies
@@ -25,23 +23,26 @@ $ npm install
 $ npm run dev
 ```
 
+
 ## Functions Summary
+* Access tokens are retrieved from Netatmo app following the instructions: https://dev.netatmo.com/apidocumentation/oauth.
 
-1. Access tokens are retrieved from Netatmo app following the instructions: https://dev.netatmo.com/apidocumentation/oauth.
+* Public data is retrieved using the /getpublicdata endpoint  (https://dev.netatmo.com/apidocumentation/weather#getpublicdata)
 
-2. Public data is retrieved using the /getpublicdata endpoint  (https://dev.netatmo.com/apidocumentation/weather#getpublicdata)
+* The widget can display the weather information of some of the world's major cites.
 
-3. The widget can display the weather information of some of the world's major cites.
 
 ## API Doc
+* Oauth Authentication: https://dev.netatmo.com/apidocumentation/oauth
 
-Oauth Authentication 
-https://dev.netatmo.com/apidocumentation/oauth
-
-Weather API Documentation
-https://dev.netatmo.com/apidocumentation/weather#documentation
+* Weather API Documentation: https://dev.netatmo.com/apidocumentation/weather#documentation
 
 
-## ToDo
+## Todo
+* Improve the Loading Spinner effect -> Overlay the content instead of replace the content
 
-1. For now only the API calling service script is with typescript, need to change the component js and the store to ts if there is time (need some extra configs).
+* Improve the Selected Tab style -> Add animation when a tab is selected
+
+* Migrate to TypeScript (Refactor the Vuex Store and the Components), currently only the API serivce is written with TypeScript
+
+* Create an auth middleware
