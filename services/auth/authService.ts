@@ -11,8 +11,8 @@ class AuthService implements AuthServiceInterface {
   async getAcessToken(username: string, password: string): Promise<string> {
     const body = qs.stringify({
       grant_type: 'password',
-      client_id: '6280d8ef51c3d25e2d2c4b76',
-      client_secret: 'oI1ojT7K73UKIse2BEa0359dxuQ',
+      client_id: process.env.DEV_NETATMO_CLIENT_ID,
+      client_secret: process.env.DEV_NETATMO_CLIENT_SECRET,
       username,
       password,
       scope: 'read_station',
