@@ -71,37 +71,34 @@ export default {
       )
     },
   },
-  async mounted() {
-    this.isLoading = true
-    if (this.$auth.strategy.token.status().valid()) {
-      const location = {
-        lat_ne: this.selectedCities[0].lat_ne,
-        lat_sw: this.selectedCities[0].lat_sw,
-        lon_ne: this.selectedCities[0].lon_ne,
-        lon_sw: this.selectedCities[0].lon_sw,
-      }
-      const params = {
-        token: this.$auth.strategy.token.get(),
-        location,
-        requiredData: this.requiredData,
-        ifFilter: this.ifFilter,
-      }
-      await this.$store.dispatch('city/fetchCityWeather', params)
-    } else {
-      const token = await this.$authService().getAcessToken(
-        process.env.DEV_NETATMO_USER_NAME,
-        process.env.DEV_NETATMO_PASSWORD
-      )
-      this.$auth.strategy.token.set(token)
-    }
-    this.isLoading = false
+  mounted() {
+    this.fetchWeatherData()
   },
   methods: {
-    updateSelectedTags(event) {
-      const selectedCities = this.defaultCities.filter(city => {
+    async fetchWeatherData() {
+      this.isLoading = true
+      if (this.$auth.strategy.token.status().valid()) {
+        const params = {
+          token: this.$auth.strategy.token.get(),
+          requiredData: this.requiredData,
+          ifFilter: this.ifFilter,
+        }
+        await this.$store.dispatch('city/fetchCityWeather', params)
+      } else {
+        const token = await this.$authService().getAcessToken(
+          process.env.DEV_NETATMO_USER_NAME,
+          process.env.DEV_NETATMO_PASSWORD
+        )
+        this.$auth.strategy.token.set(token)
+      }
+      this.isLoading = false
+    },
+    async updateSelectedTags(event) {
+      const selectedCities = await this.defaultCities.filter((city) => {
         return event.includes(city.city)
       })
-      this.$store.dispatch('city/setSelectedCities', selectedCities)
+      await this.$store.dispatch('city/setSelectedCities', selectedCities)
+      await this.fetchWeatherData()
     },
   },
 }

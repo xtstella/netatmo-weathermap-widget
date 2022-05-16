@@ -1,3 +1,5 @@
+import { cloneDeep } from 'lodash'
+
 export const state = () => ({
   defaultCities: [
     {
@@ -31,17 +33,17 @@ export const state = () => ({
       pressure: '',
     },
     {
-      city: 'Bogota',
-      lat_ne: 5.266007882805492,
-      lat_sw: 4.915832801313174,
-      lon_ne: -75.234375,
-      lon_sw: -75.5859375,
+      city: 'Dublin',
+      lat_ne: 53.349765,
+      lat_sw: 53,
+      lon_ne: 6,
+      lon_sw: -6.260273,
       temperature: '',
       humidity: '',
       pressure: '',
     },
   ],
-  selectableCityList: ['Paris', 'New York', 'Berlin', 'Bogota'],
+  selectableCityList: ['Paris', 'New York', 'Berlin', 'Dublin'],
   selectedCities: [
     {
       city: 'Paris',
@@ -72,20 +74,38 @@ export const actions = {
   setSelectedCities({ commit }, cities) {
     commit('SET_SELECTED_CITIES', cities)
   },
-  async fetchCityWeather({ commit }, params) {
+  async fetchCityWeather({ state, commit }, params) {
     try {
-      const results = await this.$weatherService().getPublicData(
-        params.token,
-        params.location,
-        params.requiredData,
-        params.ifFilter
+      let selectedCitiesWithWeatherInfo = cloneDeep(state.selectedCities)
+      selectedCitiesWithWeatherInfo = await Promise.all(
+        selectedCitiesWithWeatherInfo.map(async (city) => {
+          const location = {
+            lat_ne: city.lat_ne,
+            lat_sw: city.lat_sw,
+            lon_ne: city.lon_ne,
+            lon_sw: city.lon_sw,
+          }
+          const res = await this.$weatherService().getPublicData(
+            params.token,
+            location,
+            params.requiredData,
+            params.ifFilter
+          )
+          const data = await res.body
+          const measuresTandH = Object.values(data.shift().measures)[0]
+          const measuresNumbersTandH = Object.values(measuresTandH)[0]
+          const temperature = Object.values(measuresNumbersTandH)[0][0]
+          const humidity = Object.values(measuresNumbersTandH)[0][1]
+          const measuresP = Object.values(data.shift().measures)[1]
+          const measuresNumbersP = measuresP.res
+          const pressure = Object.values(measuresNumbersP)[0][0]
+          city.temperature = temperature
+          city.humidity = humidity
+          city.pressure = pressure
+          return city
+        })
       )
-      commit(
-        'SET_ENTITIES',
-        results.filter((industry) => industry.name !== 'NONE')
-      )
-    } catch (err) {
-      // TO DO : what to do if we can't fetch this ?
-    }
+      commit('SET_SELECTED_CITIES', selectedCitiesWithWeatherInfo)
+    } catch (err) {}
   },
 }
