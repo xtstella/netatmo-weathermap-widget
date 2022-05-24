@@ -1,4 +1,4 @@
-# Netatmo Weathermap Widget
+# Weathermap Widget
 A widget that can get weather data of the world's major cities from Netatmo Weather Stations and display the temperature, humidity, pressure information in an interactive interface.
 
 
@@ -7,7 +7,7 @@ Try out a <a href="https://netatmo-weathermap-widget.herokuapp.com/">Live Demo</
 
 
 ## Technologies
-* NuxtJS V2.15.7
+* VueJS (NuxtJS)
 * Tailwind CSS
 * Typescript
 
