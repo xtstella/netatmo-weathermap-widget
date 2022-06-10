@@ -1,5 +1,9 @@
 # Weathermap Widget
-A widget that can get weather data of the world's major cities from Netatmo Weather Stations and display the temperature, humidity, pressure information in an interactive interface.
+
+A show-case to use Typescript for API service in VueJS.
+The mini-project includes the following parts:
+- An auth service including retrieving tokens and connecting a public API with Oauth2
+- A simple interactive interface including an animated tags selector, a vertical tab selector and a table. Users can select from the world's major cities and get information of their temperature, humidity and pressure information.
 
 
 ## Demo
